@@ -1,0 +1,20 @@
+[
+  {
+  "name" : "test",
+  "path" : "./script/test.js",
+  "workingDir" : "",
+  "max" : "5",
+  "sleepTime" : "5000",
+  "isValid" : "1",
+  "port" : "4000"
+  },
+  {
+    "name" : "stationPC-QLS",
+    "path" : "./script/stationPC-QLS.js",
+    "workingDir" : "",
+    "max" : "0",
+    "sleepTime" : "5000",
+    "isValid" : "1",
+    "port" : "4001"
+  }
+]

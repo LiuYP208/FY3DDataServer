@@ -5,7 +5,7 @@
   "workingDir" : "",
   "max" : "5",
   "sleepTime" : "5000",
-  "isValid" : "1",
+  "isValid" : "0",
   "port" : "4000"
   },
   {
@@ -14,7 +14,7 @@
     "workingDir" : "",
     "max" : "0",
     "sleepTime" : "5000",
-    "isValid" : "1",
+    "isValid" : "0",
     "port" : "4001"
   }
 ]

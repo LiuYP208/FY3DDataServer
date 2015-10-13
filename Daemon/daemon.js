@@ -3,6 +3,7 @@
  * 与配置文件（数据库/文件）配合 维护相关进程的启停。包括如下两方面的功能：
  * 1. 进程守护功能
  * 2. 对外服务功能（RESTfulServer 包括查看、控制、帮助等）
+ *      - 守护进程的API包括功能详见README.md
  * 3. 运行日志记录与管理
  * PS: 目前采用JSON文件保存进程配置信息。未来或许会改为以数据库方式存储。
  */
@@ -10,12 +11,13 @@
 'use strict';
 
 var psCtrl = require('./lib/processCtrl');
+var restServer = require('./daemonServer');
 var http = require('http');
-var parse = require('url').parse;
 var processModuleList = []; //进程对象列表,在readProcessConfig（）中初始化
 
 
 daemon();
+daemonServer();
 
 /**
  * 实现进程守护功能.
@@ -66,18 +68,10 @@ function createProcessModuleList(processList) {
         if(processList[i].hasOwnProperty('isValid') && processList[i]['isValid'] === '1'){
 
             //创建进程对象
-            if(!processList[i].hasOwnProperty('name') || !processList[i].hasOwnProperty('path') || !processList[i].hasOwnProperty('path')){
+            if(!processList[i].hasOwnProperty('name') || !processList[i].hasOwnProperty('path')){
                 continue;
             }
-            var processModule = {};
-            processModule.workingDir = processList[i].path;
-            processModule.max = 5;
-            processModule.sleepTime = 5000;
-            processModule.isValid = 1;
-            processModule.port = 4001;
-            processModule.count = 0;
-            processModule.pid = 0;
-            processModule.status = 0;
+            var processModule = psCtrl.createProcessModule();
             for(var prop in processList[i]){
                 processModule[prop] = processList[i][prop];
             }

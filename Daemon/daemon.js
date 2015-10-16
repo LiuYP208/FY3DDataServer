@@ -16,8 +16,12 @@ var http = require('http');
 var processModuleList = []; //进程对象列表,在readProcessConfig（）中初始化
 
 
-daemon();
-daemonServer();
+start();
+
+function start(){
+    daemon();
+    daemonServer();
+};
 
 /**
  * 实现进程守护功能.
@@ -97,7 +101,6 @@ function startDaemon() {
  * 守护进程的服务功能
  */
 function daemonServer(){
-    var server = http.createServer(function(req, resp){
-
-    }).listen(8080, '127.0.0.1');
+    restServer.init(processModuleList);
+    restServer.start();
 }

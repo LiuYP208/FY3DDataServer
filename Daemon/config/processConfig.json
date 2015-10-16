@@ -1,11 +1,11 @@
 [
   {
   "name" : "test",
-  "path" : "./script/test.js",
+  "path" : "../test/test.js",
   "workingDir" : "",
   "max" : "5",
   "sleepTime" : "5000",
-  "isValid" : "0",
+  "isValid" : "1",
   "port" : "4000"
   },
   {

@@ -6,13 +6,14 @@ var child = require('child_process');
 var RUNNING = 1;
 var STOP = 2;
 var UNRUNNING = 0;
+var psCtrl = null;
 
 exports.RUNNING = RUNNING;
 exports.STOP = STOP;
 exports.UNRUNNING = UNRUNNING;
 
 exports.createPsCtrl = function(){
-    return new ProcessCtrl();
+    return (psCtrl) ? psCtrl : new ProcessCtrl();
 };
 
 exports.createProcessModule = function () {
@@ -23,7 +24,7 @@ function ProcessCtrl(){};
 ProcessCtrl.prototype.start = start;
 ProcessCtrl.prototype.kill = kill;
 ProcessCtrl.prototype.restart = restart;
-function start(processModule){
+function start(processModule, callback){
     var ls = child.spawn('node',[processModule['path'], processModule['port']]);
     if(ls.pid != 0){
         processModule.pid = ls.pid;
@@ -33,7 +34,7 @@ function start(processModule){
     }
     ls.on('exit', function (code){
         //输出错误码
-        console.log("exit code:" + code);
+        console.log("process - " + processModule['name'] + " exit; exit code - " + code);
         //重新启动脚本
         if(processModule.status !== STOP) {
             if (processModule.count <= processModule.max && processModule.max != "0") {
@@ -47,16 +48,34 @@ function start(processModule){
     ls.stdout.on('data', function(data){
         console.log(data.toString());
     });
+    if(callback){
+        callback(processModule);
+    }
 }
-function kill(processModule){
-    child.exec('kill -9 ' + processModule.pid);
-    processModule.status = STOP;
+function kill(processModule, callback){
+    var platform = process.platform;
+    var cmdStr = '';
+    if(platform == 'linux'){
+        cmdStr = 'kill -9 ' + processModule.pid;
+    }else if(platform == 'win32'){
+        cmdStr = 'wmic process where ProcessId="' + processModule.pid + '" call terminate';
+    }
+    child.exec(cmdStr, function(err, stdout, stderr){
+        processModule.status = STOP;
+        callback(processModule);
+    });
 }
-function restart(processModule){
-    var ls = child.exec('kill -9 ' + processModule.pid);
-    processModule.status = STOP;
-    ls.on('exit', function(code){
-        start(processModule);
+function restart(processModule, callback){
+    var cmdStr = '';
+    var platform = process.platform;
+    if(platform == 'linux'){
+        cmdStr = 'kill -9 ' + processModule.pid;
+    }else if(platform == 'win32'){
+        cmdStr = 'wmic process where ProcessId="' + processModule.pid + '" call terminate';
+    }
+    child.exec(cmdStr, function(error, stdout, stderr){
+        processModule.status = STOP;
+        start(processModule, callback);
     });
 }
 

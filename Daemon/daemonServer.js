@@ -173,6 +173,7 @@ function ctrlProcess(processName, status, callback){
             }
         }else{
             if(psModule.status == psCtrl.STOP){
+                psModule.count = psModule.count -1;
                 psCtrl.createPsCtrl().start(psModule, callback);
                 return;
             }
@@ -184,6 +185,7 @@ function ctrlProcess(processName, status, callback){
         }
     }else if(status == 'restart'){
         if(psModule != null && psModule.status == psCtrl.RUNNING){
+            psModule.count = 0;
             psCtrl.createPsCtrl().restart(psModule, callback);
             return;
         }

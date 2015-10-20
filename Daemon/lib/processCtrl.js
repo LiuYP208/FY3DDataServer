@@ -60,8 +60,9 @@ function kill(processModule, callback){
     }else if(platform == 'win32'){
         cmdStr = 'wmic process where ProcessId="' + processModule.pid + '" call terminate';
     }
+
+    processModule.status = STOP;
     child.exec(cmdStr, function(err, stdout, stderr){
-        processModule.status = STOP;
         callback(processModule);
     });
 }
@@ -73,8 +74,8 @@ function restart(processModule, callback){
     }else if(platform == 'win32'){
         cmdStr = 'wmic process where ProcessId="' + processModule.pid + '" call terminate';
     }
+    processModule.status = STOP;
     child.exec(cmdStr, function(error, stdout, stderr){
-        processModule.status = STOP;
         start(processModule, callback);
     });
 }

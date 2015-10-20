@@ -1,0 +1,27 @@
+[
+  {
+    "method" : "GET",
+    "url" : "/api/daemon",
+    "description" : "获取API列表"
+  },
+  {
+    "method" : "GET",
+    "url" : "/api/daemon/process",
+    "description" : "获取所有进程的状态（包括：name、pid、status、cpu、mem、启动次数等）"
+  },
+  {
+    "method" : "GET",
+    "url" : "/api/daemon/process/:processName",
+    "description" : "获取指定进程的状态（包括：name、pid、status、cpu、mem、启动次数等）"
+  },
+  {
+    "method" : "PUT",
+    "url" : "/api/daemon/process/:processName/:status",
+    "description" : "控制指定进程的状态（包括：start、stop、restart）"
+  },
+  {
+    "method" : "PUT",
+    "url" : "/api/daemon/process/:status",
+    "description" : "控制所有进程的状态（包括：start、stop、restart）"
+  }
+]

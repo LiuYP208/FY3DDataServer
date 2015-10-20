@@ -13,7 +13,7 @@ FY3D数据服务
 #####对外服务
 <p>**守护进程的API包括如下功能：**
     1、获取API列表
-        - GET /api/daemon/help
+        - GET /api/daemon
     2、获取所有进程的状态（包括：name、pid、status、cpu、mem、启动次数等）
         - GET /api/daemon/process
     3、获取指定进程的状态（包括：name、pid、status、cpu、mem、启动次数等）

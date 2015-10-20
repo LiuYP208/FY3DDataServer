@@ -128,9 +128,14 @@ function getProcessStatusByLinux(callback){
 }
 
 function setAllProcessStatus(req, res, next){
-    var status = req.params[0];
+    var status = req.params['status'];
+    var psList = [];
     for(var i = 0; i < psConfigList.length; i++){
-        ctrlProcess(psConfigList[i].name, status);
+        if(psConfigList[i].isValid == 0) continue;
+        ctrlProcess(psConfigList[i].name, status, function(psModule){
+            psList.push(psModule);
+            res.end(JSON.stringify(psList));
+        });
     }
     return next();
 }
@@ -194,7 +199,9 @@ function ctrlProcess(processName, status, callback){
 }
 
 function getHelp(req, res, next){
-
+    var apiDoc = require('./config/apiDocument.json');
+    //res.writeHead(200, {'Content-Type' : 'application/json'});
+    res.end(JSON.stringify(apiDoc));
 }
 
 exports.init = function (tag) {
@@ -216,7 +223,7 @@ exports.start = function () {
 
     var PATH = '/api/daemon';
 
-    server.get({path: PATH + '/help', version : '0.0.1'}, getHelp);
+    server.get({path: PATH , version : '0.0.1'}, getHelp);
 
     server.get({path: PATH + '/process', version : '0.0.1'}, getAllProcessStatus);
 
@@ -230,19 +237,3 @@ exports.start = function () {
         console.log('%s listening at %s ', server.name , server.url);
     });
 };
-
-function findAllJobs(req, res , next){
-    res.setHeader('Access-Control-Allow-Origin','*');
-    jobs.find().limit(20).sort({postedOn : -1} , function(err , success){
-        console.log('Response success '+success);
-        console.log('Response error '+err);
-        if(success){
-            res.send(200 , success);
-            return next();
-        }else{
-            return next(err);
-        }
-
-    });
-
-}

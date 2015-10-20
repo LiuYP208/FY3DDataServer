@@ -9,6 +9,15 @@
   "port" : "4000"
   },
   {
+    "name" : "test1",
+    "path" : "../test/test1.js",
+    "workingDir" : "",
+    "max" : "5",
+    "sleepTime" : "5000",
+    "isValid" : "1",
+    "port" : "4001"
+  },
+  {
     "name" : "stationPC-QLS",
     "path" : "./script/stationPC-QLS.js",
     "workingDir" : "",

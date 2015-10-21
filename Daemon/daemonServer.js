@@ -9,6 +9,7 @@
 'use strict';
 
 var child = require('child_process');
+var fs = require('fs');
 var psCtrl = require('./lib/processCtrl');
 var psConfigList = require('./config/processConfig.json');
 var psModuleList = [];
@@ -202,6 +203,46 @@ function getHelp(req, res, next){
     var apiDoc = require('./config/apiDocument.json');
     //res.writeHead(200, {'Content-Type' : 'application/json'});
     res.end(JSON.stringify(apiDoc));
+    next();
+}
+
+function getLog(req, res, next){
+    var date = req.params.date;
+    var logName = '';
+
+    //支持的格式为 YYYYMMDD,YYYY-MM-DD
+    var dateReg = /[0-9]{8}/;
+    var flg = dateReg.test(date);
+    if(flg){
+        logName = date.substr(0,4) + '-' + date.substr(4,2) + '-' + date.substr(6,2) + '.log';
+    }else{
+        dateReg = /([0-9]{4})[-]([0-9]{2})[-]([0-9]{2})/;
+        flg = dateReg.test(date);
+        if(flg){
+            logName = date + '.log';
+        }
+    }
+    if(logName != ''){
+        fs.readFile('./log/' + logName, function(err, data){
+            if(err){
+                console.log(err);
+            }else{
+                res.end(data);
+            }
+        });
+    }
+    next();
+}
+
+function getLogList(req, res, next){
+    var list = [];
+    fs.readdir('./log/', function (err, files) {
+        files.forEach(function(file){
+            list.push(file);
+        });
+        res.end(JSON.stringify(list));
+    });
+    next();
 }
 
 exports.init = function (tag) {
@@ -232,6 +273,10 @@ exports.start = function () {
     server.put({path: PATH + '/process/:status', version : '0.0.1'}, setAllProcessStatus);
 
     server.put({path: PATH + '/process/:processName/:status', version : '0.0.1'}, setProcessStatus);
+
+    server.get({path: PATH + '/log/:date', version : '0.0.1'}, getLog);
+
+    server.get({path: PATH + '/log', version : '0.0.1'}, getLogList);
 
     server.listen('4000', '127.0.0.1', function(){
         console.log('%s listening at %s ', server.name , server.url);

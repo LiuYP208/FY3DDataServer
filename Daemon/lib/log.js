@@ -26,9 +26,8 @@ function writeLog(msg, type){
     var o ={
         'type' : type,
         'time' : new Date().toLocaleTimeString(),
-        'msg' : msg,
-        'tag' : "mem: " + util.inspect(process.memoryUsage())
-    }
+        'msg' : msg
+    };
     try {
         fs.appendFile(logfilePath, JSON.stringify(o) + ",\r\n", function (err) {
             if (err) {

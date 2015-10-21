@@ -1,8 +1,9 @@
 /**
- * Created by ÁØ on 2015/10/11.
+ * Created by èŒƒéœ– on 2015/10/11.
  */
 
 var child = require('child_process');
+var log = require('./log');
 var RUNNING = 1;
 var STOP = 2;
 var UNRUNNING = 0;
@@ -30,12 +31,14 @@ function start(processModule, callback){
         processModule.pid = ls.pid;
         processModule.status = RUNNING;
         processModule.count++;
-        console.log('process \"' + processModule['name'] + "\" start, run count:" + processModule.count);
+        console.log('[process] -' + processModule['name'] + ' start, run count: ' + processModule.count);
+        log.info('daemon', '[process] -' + processModule['name'] + ' start. run count: ' + processModule.count);
     }
     ls.on('exit', function (code){
-        //Êä³ö´íÎóÂë
+        //è¾“å‡ºé”™è¯¯ç 
         console.log("process - " + processModule['name'] + " exit; exit code - " + code);
-        //ÖØĞÂÆô¶¯½Å±¾
+        log.warning('daemon', '[process] -' + processModule['name'] + ' exit. exit code: ' + code);
+        //é‡æ–°å¯åŠ¨è„šæœ¬
         if(processModule.status !== STOP) {
             if (processModule.count <= processModule.max && processModule.max != "0") {
                 setTimeout(start, processModule['sleepTime'], processModule);
@@ -46,7 +49,8 @@ function start(processModule, callback){
         }
     });
     ls.stdout.on('data', function(data){
-        console.log(data.toString());
+        console.log('[process] -' + processModule['name'] + '. [out]: ' + data.toString());
+        log.info('daemon', '[process] -' + processModule['name'] + '. [out]: ' + data.toString());
     });
     if(callback){
         callback(processModule);

@@ -23,5 +23,15 @@
     "method" : "PUT",
     "url" : "/api/daemon/process/:status",
     "description" : "控制所有进程的状态（包括：start、stop、restart）"
+  },
+  {
+    "method" : "GET",
+    "url" : "/api/daemon/log/:date",
+    "description" : "获取指定日期的日志信息"
+  },
+  {
+    "method" : "GET",
+    "url" : "/api/daemon/log",
+    "description" : "获取日志文件列表"
   }
 ]

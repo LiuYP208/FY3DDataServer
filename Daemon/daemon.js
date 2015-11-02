@@ -28,6 +28,7 @@ function start(){
  * 守护进程.
  */
 function daemon(){
+    console.log('1');
     log.info('daemon', 'daemon start');
     initDaemon();
     startDaemon();

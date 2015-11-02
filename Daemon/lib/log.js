@@ -7,25 +7,26 @@ var fs = require('fs');
 var path = require('path');
 var util = require('util');
 
-exports.warning = function(msg){
-    writeLog(msg, 'warning')
+exports.warning = function(provider, msg){
+    writeLog(provider, msg, 'warning')
 };
 
-exports.info = function(msg){
-    writeLog(msg, 'info')
+exports.info = function(provider, msg){
+    writeLog(provider, msg, 'info')
 }
 
-exports.error = function(msg){
-    writeLog(msg, 'error');
+exports.error = function(provider, msg){
+    writeLog(provider, msg, 'error');
 }
 
-function writeLog(msg, type){
+function writeLog(provider, msg, type){
     var date = new Date().toLocaleDateString();
     var pathname = path.resolve(__dirname, '../log');
     var logfilePath = pathname + '/' + date + '.log';
     var o ={
         'type' : type,
         'time' : new Date().toLocaleTimeString(),
+        'provider' : provider,
         'msg' : msg
     };
     try {

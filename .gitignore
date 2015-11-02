@@ -1,7 +1,4 @@
-.idea/*.*
-test/*.*
-.idea/FY3DDataServer.iml
-*.log
-*.xml
-.idea/FY3DDataServer.iml
-.idea/workspace.xml
+.idea/
+.vscode/
+test/
+Daemon/log/

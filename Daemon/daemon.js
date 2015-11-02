@@ -14,6 +14,7 @@ var log = require('./lib/log');
 var configer = require('./lib/processConfiger_JSON');
 var restServer = require('./daemonServer');
 var http = require('http');
+var path = require('path');
 var processModuleList = []; //进程状态列表
 
 
@@ -28,7 +29,7 @@ function start(){
  * 守护进程.
  */
 function daemon(){
-    console.log('1');
+    console.log('daemon start');
     log.info('daemon', 'daemon start');
     initDaemon();
     startDaemon();
@@ -80,7 +81,7 @@ function createProcessModuleList(processList) {
             for(var prop in processList[i]){
                 processModule[prop] = processList[i][prop];
             }
-
+            processModule.path = path.resolve(__dirname, processModule.path);      
             processModuleList.push(processModule);
         }
     }

@@ -8,7 +8,7 @@ var pathname = path.resolve(__dirname, '../config') + '/processConfig.json';
 var processConfigList = [];
 
 exports.getConfigList = function (){
-    processConfigList = JSON.parse(fs.readFileSync(pathname));
+    processConfigList = JSON.parse(fs.readFileSync(pathname).toString());
     return processConfigList;
 };
 
@@ -16,7 +16,7 @@ exports.add = function (item) {
     if(!checkType(item)){
         return 'The specified object types do not match';
     }
-    processConfigList = JSON.parse(fs.readFileSync(pathname));
+    processConfigList = JSON.parse(fs.readFileSync(pathname).toString());
     for(var i = 0; i < processConfigList.length; i++){
         if(processConfigList[i]['name'] == item['name']){
             return 'The specified object already exists';
@@ -28,7 +28,7 @@ exports.add = function (item) {
 };
 
 exports.delete = function (name) {
-    processConfigList = JSON.parse(fs.readFileSync(pathname));
+    processConfigList = JSON.parse(fs.readFileSync(pathname).toString());
     for(var i = 0; i < processConfigList.length; i++){
         if(processConfigList[i]['name'] == name){
             processConfigList.splice(i,1);

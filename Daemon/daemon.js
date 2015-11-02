@@ -1,11 +1,9 @@
 /**
- * Created by ÁØ on 2015/10/10.
- * ÓëÅäÖÃÎÄ¼þ£¨Êý¾Ý¿â/ÎÄ¼þ£©ÅäºÏ Î¬»¤Ïà¹Ø½ø³ÌµÄÆôÍ£¡£°üÀ¨ÈçÏÂÁ½·½ÃæµÄ¹¦ÄÜ£º
- * 1. ½ø³ÌÊØ»¤¹¦ÄÜ
- * 2. ¶ÔÍâ·þÎñ¹¦ÄÜ£¨RESTfulServer °üÀ¨²é¿´¡¢¿ØÖÆ¡¢°ïÖúµÈ£©
- *      - ÊØ»¤½ø³ÌµÄAPI°üÀ¨¹¦ÄÜÏê¼ûREADME.md
- * 3. ÔËÐÐÈÕÖ¾¼ÇÂ¼Óë¹ÜÀí
- * PS: Ä¿Ç°²ÉÓÃJSONÎÄ¼þ±£´æ½ø³ÌÅäÖÃÐÅÏ¢¡£Î´À´»òÐí»á¸ÄÎªÒÔÊý¾Ý¿â·½Ê½´æ´¢¡£
+ * Created by ï¿½ï¿½ on 2015/10/10.
+ * ä¸Žé…ç½®æ–‡ä»¶ï¼ˆæ•°æ®åº“/æ–‡ä»¶ï¼‰é…åˆ ç»´æŠ¤ç›¸å…³è¿›ç¨‹çš„å¯åœã€‚åŒ…æ‹¬å¦‚ä¸‹ä¸‰ä¸ªæ–¹é¢ï¼š
+ * 1. è¿›ç¨‹å®ˆæŠ¤åŠŸèƒ½
+ * 2. å¯¹å¤–æœåŠ¡åŠŸèƒ½ï¼›ï¼ˆRESTfulServer åŒ…æ‹¬æŸ¥çœ‹ã€æŽ§åˆ¶ã€å¸®åŠ©ç­‰ï¼‰
+ * 3.  è¿è¡Œæ—¥å¿—è®°å½•ä¸Žç®¡ç†
  */
 
 'use strict';
@@ -13,7 +11,7 @@
 var psCtrl = require('./lib/processCtrl');
 var restServer = require('./daemonServer');
 var http = require('http');
-var processModuleList = []; //½ø³Ì¶ÔÏóÁÐ±í,ÔÚreadProcessConfig£¨£©ÖÐ³õÊ¼»¯
+var processModuleList = []; //ï¿½ï¿½ï¿½Ì¶ï¿½ï¿½ï¿½ï¿½Ð±ï¿½,ï¿½ï¿½readProcessConfigï¿½ï¿½ï¿½ï¿½ï¿½Ð³ï¿½Ê¼ï¿½ï¿½
 
 
 start();
@@ -24,7 +22,7 @@ function start(){
 };
 
 /**
- * ÊµÏÖ½ø³ÌÊØ»¤¹¦ÄÜ.
+ * Êµï¿½Ö½ï¿½ï¿½ï¿½ï¿½Ø»ï¿½ï¿½ï¿½ï¿½ï¿½.
  */
 function daemon(){
     initDaemon();
@@ -32,9 +30,9 @@ function daemon(){
 };
 
 /**
- * ³õÊ¼»¯ÊØ»¤½ø³Ì
- * 1.¶ÁÈ¡½ø³ÌÅäÖÃÐÅÏ¢£»
- * 2.Éú³ÉÓÃÓÚ¼ÇÂ¼½ø³Ì×´Ì¬µÄ processModule ÁÐ±í
+ * ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½Ø»ï¿½ï¿½ï¿½ï¿½ï¿½
+ * 1.ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢ï¿½ï¿½
+ * 2.ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú¼ï¿½Â¼ï¿½ï¿½ï¿½ï¿½×´Ì¬ï¿½ï¿½ processModule ï¿½Ð±ï¿½
  * ...
  */
 function initDaemon() {
@@ -43,9 +41,9 @@ function initDaemon() {
 };
 
 /**
- * ¶ÁÈ¡½ø³ÌÅäÖÃÎÄ¼þ
- * ¹© createProcessModuleList() Ê¹ÓÃ
- * Ä¿Ç°²ÉÓÃJSONÎÄ¼þ±£´æ½ø³ÌÅäÖÃÐÅÏ¢¡£Î´À´»òÐí»á¸ÄÎªÒÔÊý¾Ý¿â·½Ê½´æ´¢¡£
+ * ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½
+ * ï¿½ï¿½ createProcessModuleList() Ê¹ï¿½ï¿½
+ * Ä¿Ç°ï¿½ï¿½ï¿½ï¿½JSONï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢ï¿½ï¿½Î´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½ï¿½Ý¿â·½Ê½ï¿½æ´¢ï¿½ï¿½
  * @returns {*}
  */
 function readProcessConfig(){
@@ -54,24 +52,24 @@ function readProcessConfig(){
 }
 
 /**
- * ´´½¨½ø³Ì¶ÔÏóÁÐ±í
- * processModule £º¼ÇÂ¼½ø³Ì×´Ì¬µÄ¶ÔÏó
- *  - name ½ø³ÌÃû
- *  - path ½ø³ÌÊµ¼Ê»òÏà¶ÔÂ·¾¶
- *  - workingDir ½ø³Ì¹¤×÷Ä¿Â¼
- *  - max ½ø³Ì×î´óÖØÆô´ÎÊý£¨°üÀ¨Ê×´ÎÆô¶¯£©Èç¹û = 0 ±íÊ¾ÎÞÏÞ´ÎÖØÆô
- *  - sleepTime ½ø³ÌÖØÆô¼ä¸ô
- *  - isValid ÊÇ·ñÓÐÐ§ 1 = ÓÐÐ§£» 0 = ÎÞÐ§
- *  - port ½ø³ÌÊ¹ÓÃTCPÊ±·ÖÅäµÄ¶Ë¿ÚºÅ
- *  - count ½ø³ÌÖØÆô´ÎÊý
- *  - pid ½ø³Ìid
- *  - status ½ø³Ìµ±Ç°×´Ì¬ (0 = unrunning; 1 = running; 2 = stop)
+ * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì¶ï¿½ï¿½ï¿½ï¿½Ð±ï¿½
+ * processModule ï¿½ï¿½ï¿½ï¿½Â¼ï¿½ï¿½ï¿½ï¿½×´Ì¬ï¿½Ä¶ï¿½ï¿½ï¿½
+ *  - name ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+ *  - path ï¿½ï¿½ï¿½ï¿½Êµï¿½Ê»ï¿½ï¿½ï¿½ï¿½ï¿½Â·ï¿½ï¿½
+ *  - workingDir ï¿½ï¿½ï¿½Ì¹ï¿½ï¿½ï¿½Ä¿Â¼
+ *  - max ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×´ï¿½ï¿½ð¶¯£ï¿½ï¿½ï¿½ï¿½ï¿½ = 0 ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½Þ´ï¿½ï¿½ï¿½ï¿½ï¿½
+ *  - sleepTime ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+ *  - isValid ï¿½Ç·ï¿½ï¿½ï¿½Ð§ 1 = ï¿½ï¿½Ð§ï¿½ï¿½ 0 = ï¿½ï¿½Ð§
+ *  - port ï¿½ï¿½ï¿½ï¿½Ê¹ï¿½ï¿½TCPÊ±ï¿½ï¿½ï¿½ï¿½ï¿½Ä¶Ë¿Úºï¿½
+ *  - count ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+ *  - pid ï¿½ï¿½ï¿½ï¿½id
+ *  - status ï¿½ï¿½ï¿½Ìµï¿½Ç°×´Ì¬ (0 = unrunning; 1 = running; 2 = stop)
  */
 function createProcessModuleList(processList) {
     for(var i = 0; i < processList.length; i++){
         if(processList[i].hasOwnProperty('isValid') && processList[i]['isValid'] === '1'){
 
-            //´´½¨½ø³Ì¶ÔÏó
+            //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì¶ï¿½ï¿½ï¿½
             if(!processList[i].hasOwnProperty('name') || !processList[i].hasOwnProperty('path')){
                 continue;
             }
@@ -86,7 +84,7 @@ function createProcessModuleList(processList) {
 }
 
 /**
- * Æô¶¯ÊØ»¤½ø³Ì
+ * ï¿½ï¿½ï¿½ï¿½ï¿½Ø»ï¿½ï¿½ï¿½ï¿½ï¿½
  *
  */
 function startDaemon() {
@@ -98,7 +96,7 @@ function startDaemon() {
 }
 
 /**
- * ÊØ»¤½ø³ÌµÄ·þÎñ¹¦ÄÜ
+ * ï¿½Ø»ï¿½ï¿½ï¿½ï¿½ÌµÄ·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
  */
 function daemonServer(){
     restServer.init(processModuleList);

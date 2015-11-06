@@ -106,30 +106,31 @@ function DaemonServer() {
     }
 
     function _getProcessStatus(req, res, next) {
-        var param = req.params;
+        var name = req.params.processName;
         var platform = process.platform;
         if (platform === 'win32') {
             self._getProcessStatusByWin32(function (processModuleList) {
                 for (var i = 0; i < processModuleList.length; i++) {
-                    if (processModuleList[i].name == param[0]) {
+                    if (processModuleList[i].name == name) {
                         res.end(JSON.stringify(processModuleList[i]));
-                    }else{
-                        res.end('查无此进程！');
+                        return next();
                     }
                 }
+                res.end('查无此进程！');
+                return next();
             });
         } else if (platform === 'linux') {
             _getProcessStatusByLinux(function (processModuleList) {
                 for (var i = 0; i < processModuleList.length; i++) {
-                    if (processModuleList[i].name == param[0]) {
+                    if (processModuleList[i].name == name) {
                         res.end(JSON.stringify(processModuleList[i]));
-                    }else{
-                        res.end('查无此进程！');
+                        return next();
                     }
                 }
+                res.end('查无此进程！');
+                return next();
             });
         }
-        return next();
     }
 
     function _setAllProcessStatus(req, res, next) {

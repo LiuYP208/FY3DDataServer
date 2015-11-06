@@ -12,6 +12,7 @@ var child = require('child_process');
 var EventEmitter = require('events').EventEmitter;
 var util = require('util');
 var fs = require('fs');
+var path = require('path');
 var commonFunc = require('./lib/commonFunc')
 var psCtrl = require('./lib/processCtrl');
 var configer = require('./lib/processConfiger_JSON');
@@ -23,7 +24,7 @@ function DaemonServer() {
     EventEmitter.call(this);
 
     var self = this;
-    
+
     var localIP = commonFunc.getLoacalIP();
 
     this.init = function (tag) {
@@ -46,7 +47,14 @@ function DaemonServer() {
 
         var PATH = '/api/daemon';
 
+        //获取帮助信息
         server.get({ path: PATH, version: '0.0.1' }, _getHelp);
+
+        //获取指定进程的帮助信息
+        server.get({ path: PATH + '/processhelp/:name', version: '0.0.1' }, _getProcessHelp);
+        
+        //获取进程列表  
+        server.get({ path: PATH + '/processhelp', version: '0.0.1' }, _getProcessList);
 
         //查询所有进程的状态
         server.get({ path: PATH + '/process', version: '0.0.1' }, _getAllProcessStatus);
@@ -55,10 +63,10 @@ function DaemonServer() {
         server.get({ path: PATH + '/process/:processName', version: '0.0.1' }, _getProcessStatus);
 
         //设置所有进程的状态（status：start、stop、restart）
-        server.put({ path: PATH + '/process/:status', version: '0.0.1' }, _setAllProcessStatus);
+        server.put({ path: PATH + '/setprocess/:status', version: '0.0.1' }, _setAllProcessStatus);
 
         //设置指定进程的状态（status：start、stop、restart）
-        server.put({ path: PATH + '/process/:processName/:status', version: '0.0.1' }, _setProcessStatus);
+        server.put({ path: PATH + '/setprocess/:processName/:status', version: '0.0.1' }, _setProcessStatus);
 
         //读取日志信息
         server.get({ path: PATH + '/log/:date', version: '0.0.1' }, _getLog);
@@ -105,6 +113,8 @@ function DaemonServer() {
                 for (var i = 0; i < processModuleList.length; i++) {
                     if (processModuleList[i].name == param[0]) {
                         res.end(JSON.stringify(processModuleList[i]));
+                    }else{
+                        res.end('查无此进程！');
                     }
                 }
             });
@@ -113,6 +123,8 @@ function DaemonServer() {
                 for (var i = 0; i < processModuleList.length; i++) {
                     if (processModuleList[i].name == param[0]) {
                         res.end(JSON.stringify(processModuleList[i]));
+                    }else{
+                        res.end('查无此进程！');
                     }
                 }
             });
@@ -195,7 +207,7 @@ function DaemonServer() {
         var apiDoc = require('./config/apiDocument.json');
         //res.writeHead(200, {'Content-Type' : 'application/json'});
         res.end(JSON.stringify(apiDoc));
-        next();
+        return next();
     }
 
     function _getLog(req, res, next) {
@@ -223,7 +235,7 @@ function DaemonServer() {
                 }
             });
         }
-        next();
+        return next();
     }
 
     function _getLogList(req, res, next) {
@@ -234,7 +246,7 @@ function DaemonServer() {
             });
             res.end(JSON.stringify(list));
         });
-        next();
+        return next();
     }
 
     function _refreshConfig(req, res, next) {
@@ -355,6 +367,47 @@ function DaemonServer() {
             }
         }
         return false;
+    }
+
+    function _getProcessHelp(req, res, next) {
+        var name = req.params.name;
+        var mdPath = '';
+        for (var i = 0; i < psModuleList.length; i++) {
+            if (psModuleList[i].name == name) {
+                mdPath = path.dirname(psModuleList[i].path) + '/md/' + psModuleList[i].name + '.md';
+                break;
+            }
+        }
+        if (mdPath != '') {
+            fs.exists(mdPath, function (isExist) {
+                if (isExist) {
+                    fs.readFile(mdPath, function (err, content) {
+                        if (err) {
+                            //res.end(err);
+                            next(err);
+                        } else {
+                            res.end(content.toString());
+                            next();
+                        }
+                    });
+                } else {
+                    res.end('进程说明文档不存在。');
+                    next();
+                }
+            });
+        } else {
+            res.end('进程不存在。');
+            next();
+        }
+    }
+
+    function _getProcessList(req, res, next) {
+        var psList = [];
+        for (var i = 0; i < psModuleList.length; i++) {
+            psList.push(psModuleList[i].name);
+        }
+        res.end(JSON.stringify(psList));
+        next();
     }
 }
 

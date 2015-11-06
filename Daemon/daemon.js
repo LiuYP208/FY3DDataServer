@@ -81,7 +81,7 @@ function createProcessModuleList(processList) {
             for(var prop in processList[i]){
                 processModule[prop] = processList[i][prop];
             }
-            processModule.path = path.resolve(__dirname, processModule.path);      
+            //processModule.path = path.resolve(__dirname, processModule.path);      
             processModuleList.push(processModule);
         }
     }
@@ -106,6 +106,7 @@ function daemonServer(){
     server.init(processModuleList);
     server.start();
     server.on('refresh', function (configList) {
-        //根据跟新后的列表重新生成processModuleList
+        server.init(processModuleList);
+        //console.log(JSON.stringify(processModuleList));
     });
 }

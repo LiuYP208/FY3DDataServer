@@ -1,7 +1,7 @@
 [
   {
     "name": "test",
-    "path": "../test/test.js",
+    "path": "/home/fantasylin/workstation/FY3DDataServer/test/test.js",
     "workingDir": "",
     "max": "5",
     "sleepTime": "5000",
@@ -10,11 +10,20 @@
   },
   {
     "name": "test1",
-    "path": "../test/test1.js",
+    "path": "/home/fantasylin/workstation/FY3DDataServer/test/test1.js",
     "workingDir": "",
     "max": "5",
     "sleepTime": "5000",
     "isValid": "1",
     "port": "4001"
+  },
+  {
+    "name": "baseDataServer",
+    "path": "/home/fantasylin/workstation/FY3DDataServer/FY3D/baseDataServer.js",
+    "workingDir": "",
+    "max": "0",
+    "sleepTime": "5000",
+    "isValid": "1",
+    "port": "4002"
   }
 ]

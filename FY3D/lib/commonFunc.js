@@ -27,3 +27,29 @@ exports.getLoacalIP = function () {
 		}
     }
 };
+
+/**
+ * Created by 范霖 on 2015/11/02.
+ * 时钟
+ */
+var util = require('util');
+var EventEmitter = require('events').EventEmitter;
+
+function Timer() {
+	EventEmitter.call(this);
+	var self = this;
+	var intervalObject = {};
+	self.interval = 1000;
+	self.start = function () {
+		intervalObject = setInterval(function () {
+			self.emit('tick');
+		}, self.interval);
+	};
+	self.stop = function () {
+		clearInterval(intervalObject);
+	};
+}
+
+util.inherits(Timer, EventEmitter);
+
+exports.timer = Timer;

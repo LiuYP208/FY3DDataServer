@@ -37,7 +37,6 @@
 		var PATH = path.resolve(__dirname, './data/timetable');
 		var timeTableName = PATH + '/' + NAME + dateStr + '.xml';
 		var parseString = xml2js.parseString;
-		//console.log(timeTableName);
 		fs.exists(timeTableName, function (isExist) {
 			if (isExist) {
 				var xml = fs.readFileSync(timeTableName).toString();

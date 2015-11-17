@@ -40,7 +40,7 @@
 	 * 时间表下载，定时轮询，当满足条件时，下载时间表文件 
 	 * 规则：每天定时下载　２３：５８分　下载第二天的时间表。
 	 */
-	var timeTableTimer = new Timer(40000);
+	var timeTableTimer = new Timer(60000);
 	timeTableTimer.start();
 	timeTableTimer.on('tick', function () {
 		var Now = new Date();
@@ -52,6 +52,7 @@
 		var timeTableName = 'IFLAllSatPassTime' + yyyy + MM + dd + '.xml';
 		var timeTablePath = path.resolve(__dirname, './data/timetable/');
 		if ((mm == 58) && HH == 23) {
+		//if (mm % 3 == 0) {
 			_downloadTimeTable(timeTablePath, timeTableName, function (err) {
 				if (err) {
 					log.error('baseDataAcquisition', 'DownloadTimeTable failed, TimeTable: ' + timeTableName);

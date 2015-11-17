@@ -38,12 +38,15 @@ function writeLog(provider, msg, type){
         'msg' : msg
     };
     try {
+        if (!fs.existsSync(pathname)) {
+            fs.mkdirSync(pathname);
+         }
         fs.appendFile(logfilePath, JSON.stringify(o) + ",\r\n", function (err) {
             if (err) {
                 console.log(err);
             }
         })
     } catch (err) {
-        console.log(err.message);
+         console.log(err);
     }
 }

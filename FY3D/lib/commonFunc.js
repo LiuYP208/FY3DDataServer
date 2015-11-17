@@ -35,11 +35,11 @@ exports.getLoacalIP = function () {
 var util = require('util');
 var EventEmitter = require('events').EventEmitter;
 
-function Timer() {
+function Timer(interval) {
 	EventEmitter.call(this);
 	var self = this;
-	var intervalObject = {};
-	self.interval = 1000;
+	var intervalObject = 0;
+	self.interval = interval;
 	self.start = function () {
 		intervalObject = setInterval(function () {
 			self.emit('tick');

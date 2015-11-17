@@ -1,15 +1,20 @@
 /**
- * Created by 范霖 on 2015/11/02.
- * FY3D 基础数据提供服务
+ * Create by fanlin on 2015/11/17.
+ * 提供时间表相关服务
+ * １．定时下载时间表
+ * ２．数据服务
+ * 		ａ、获取时间表内容；
+ * 		ｂ、根据指令下载对应的时间表；
  */
 
-(function () {
+(function ()　{	
+	var restify = require('restify');
 	var fs = require('fs');
 	var path = require('path');
-	var restify = require('restify');
 	var xml2js = require('xml2js');
-	var commonFunc = require('./lib/commonFunc');
+	var commonFunc = require('./lib/commonFunc');	
 
+	var self = this;
 	var port = (process.argv[2]) ? process.argv[2] : 4002;
 	var localIP = commonFunc.getLoacalIP();
 	var server = restify.createServer({
@@ -18,8 +23,7 @@
 	server.use(restify.queryParser());
 	server.use(restify.bodyParser());
 	server.use(restify.CORS());
-
-	var self = this;
+	
 	var PATH = '/fy3d/api/basedata';
 
 	/**
@@ -50,5 +54,7 @@
 			}
 		});
 	}
-
+	
+	
+	
 })();

@@ -4,3 +4,4 @@
 /// <reference path="restify/restify.d.ts" />
 /// <reference path="ftp/ftp.d.ts" />
 /// <reference path="xml2js/xml2js.d.ts" />
+/// <reference path="mysql/mysql.d.ts" />

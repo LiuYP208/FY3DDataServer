@@ -7,7 +7,7 @@
 var fs = require('fs');
 var xml2js = require('xml2js');
 
-var MYSQLIP='http://localhost:8080';
+var MYSQLIP='http://1:8080';
 var APIversion='1.0.0';
 
 //默认测试设置
@@ -16,7 +16,8 @@ var FY3DCOSS_DBUser="fy3d";
 var FY3DCOSS_DBPassword="fy3d";
 var FY3DCOSS_DBPort="3306";
 
-//动态获取赋值
+//动态获取赋值--使用xml？？使用json？
+
 _getDBSetFromXML();
 //从xml文件中获取数据库信息
 function  _getDBSetFromXML()

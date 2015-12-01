@@ -24,3 +24,9 @@ exports._DASPort = DASPort;
 //DPPS监听端口8802--_DPPSPort
 var DPPSPort = 8802;
 exports._DPPSPort = DPPSPort;
+
+
+//COSS 监听端口 8804
+var COSSPort = 8804;
+exports._COSSPort = COSSPort;
+
